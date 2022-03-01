@@ -1,11 +1,21 @@
 import * as ideas from './ideaModel.mjs';
 import express from 'express';
+import * as fs from 'fs'
 
 const PORT = 3000;
 
 const app = express();
 
 app.use(express.json());
+
+app.get('/micro', () => {
+    fs.writeFile('C:\\Users\\kirby\\OneDrive\\Documents\\Artem_micro\\CreateGHRepo-MS\\observation\\goal.txt', 'run', err => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+    });
+});
 
 app.post('/ideas', (req, res) => {
     ideas.createIdea(req.body.idea, req.body.votes, req.body.creator, req.body.details)
@@ -20,7 +30,7 @@ app.post('/ideas', (req, res) => {
 });
 
 app.post('/users', (req, res) => {
-    ideas.createUser(req.body.name, req.body.ideaCollection)
+    ideas.createUser(req.body.username, req.body.password)
     .then(user => {
         res.status(201).json(user);
     })
@@ -54,7 +64,21 @@ app.get('/idea', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
-    ideas.findUser({}, '', 0)
+    const username = req.query.username;
+    const password = req.query.password;
+    ideas.findUser({ username, password })
+    .then(user => {
+        res.status(200).json(user);
+    })
+    .catch(error => {
+        console.error(error);
+        res.status(500).json({ Error: error });
+    });
+});
+
+app.get('/user', (req, res) => {
+    const username = req.query.username;
+    ideas.findUser({ username })
     .then(user => {
         res.status(200).json(user);
     })

@@ -1,22 +1,26 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import CollectionComp from '../components/CollectionComp';
 
-export const MyCollection = () => {
-    return(
-      <div className="App-header">
-        <span className='main-link'>
-          <Link to="/" className='link'>Front Page</Link>
-        </span>
-        <h1>My Collection</h1>
-        <table>
-          <tr>
-            <td> Idea: Jubotron </td>
-            <td> Votes: 5 </td>
-            <td><a href='www.google.com'>Github link</a></td>
-          </tr>
-        </table>
-      </div>
-        
+function MyCollection({ collection }) {
+    return (
+        <div className="App-header">
+            <span className='main-link'>
+                <Link to="/Home" className='link'>Front Page</Link>
+            </span>
+            <h1>My Collection</h1>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Idea</th>
+                        <th>Creator</th>
+                        <th style={{textAlign:"center"}}>Create GitHub Repo?</th>
+                    </tr>
+                    <CollectionComp collection={collection}/>
+                </tbody>
+            </table>
+        </div>
+
     );
 }
 

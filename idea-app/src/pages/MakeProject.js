@@ -1,8 +1,7 @@
 import { React, useState } from 'react';
-import '../App.css';
 import { Link, useNavigate } from "react-router-dom";
 
-export const MakeProject = () => {
+function MakeProject() {
 
     const [idea, setIdea] = useState('');
     const votes = 1
@@ -12,29 +11,29 @@ export const MakeProject = () => {
     const navigate = useNavigate()
 
     const addIdea = async (i) => {
-      i.preventDefault();
-      const newIdea = { idea, votes, creator, details };
-      const response = await fetch('/ideas', {
-          method: 'POST',
-          body: JSON.stringify(newIdea),
-          headers: {
-              'Content-Type': 'application/json',
-          },
-      });
+        i.preventDefault();
+        const newIdea = { idea, votes, creator, details };
+        const response = await fetch('/ideas', {
+            method: 'POST',
+            body: JSON.stringify(newIdea),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
-      if(response.status === 201){
-          alert("Successfully added the idea!");
-      } else {
-          alert(`Failed to add idea, status code = ${response.status}`);
-      }
+        if (response.status === 201) {
+            alert("Successfully added the idea!");
+        } else {
+            alert(`Failed to add idea, status code = ${response.status}`);
+        }
 
-      navigate("/");
+        navigate("/Home");
     };
 
     return (
         <div className="App-header">
             <span className='main-link'>
-                <Link to="/" className='link'>Front Page</Link><> </>
+                <Link to="/Home" className='link'>Front Page</Link><> </>
                 <Link to="/MyCollection" className='link'>My Collection</Link>
             </span>
             <h1>Make A Project</h1>
@@ -59,7 +58,7 @@ export const MakeProject = () => {
                 rows="5"
                 cols="21"
                 value={details}
-                onChange={idea => setDetails(idea.target.value)}/>
+                onChange={idea => setDetails(idea.target.value)} />
             <button onClick={addIdea}>Create</button>
         </div>
     );

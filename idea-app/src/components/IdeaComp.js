@@ -1,5 +1,5 @@
 import React from 'react';
-import Split from './split';
+import Split from './Split';
 
 function IdeaComp({ ideas, newIdea, onDetails }) {
 

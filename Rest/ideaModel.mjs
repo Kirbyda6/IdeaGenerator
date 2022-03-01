@@ -12,8 +12,9 @@ const ideaSchema = mongoose.Schema({
 });
 
 const userSchema = mongoose.Schema({
-    name: { type: String, required: true },
-    ideaCollection: { type: String, required: true }
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+    ideaCollection: { type: [{idea: String, creator: String}], required: true }
 });
 
 /**
@@ -27,8 +28,8 @@ const createIdea = async (idea, votes, creator, details) => {
     return newIdea.save();
 }
 
-const createUser = async (name, ideaCollection) => {
-    const user = new User({ name: name, ideaCollection: ideaCollection });
+const createUser = async (username, password) => {
+    const user = new User({ username: username, password: password, ideaCollection: [] });
     return user.save();
 }
 
@@ -44,10 +45,8 @@ const findRandIdea = async () => {
     return query.exec();
 }
 
-const findUser = async (filter, projection, limit) => {
-    const query = User.find(filter)
-        .select(projection)
-        .limit(limit);
+const findUser = async (filter) => {
+    const query = User.findOne(filter).select("-password")
     return query.exec();
 }
 
