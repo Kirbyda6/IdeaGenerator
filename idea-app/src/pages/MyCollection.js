@@ -4,8 +4,8 @@ import CollectionComp from '../components/CollectionComp';
 
 function MyCollection({ collection }) {
     return (
-        <div className="App-header">
-            <span className='main-link'>
+        <div className="main">
+            <span className='corner-links'>
                 <Link to="/Home" className='link'>Front Page</Link>
             </span>
             <h1>My Collection</h1>

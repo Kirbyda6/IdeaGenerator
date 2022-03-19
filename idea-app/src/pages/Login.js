@@ -66,24 +66,24 @@ function Login({ username, password, setUsername, setPassword, setCollection }) 
     }
 
     return(
-        <div className="App-header">
+        <div className="main">
             <h1>Login</h1>
             Please Log In or Create A Profile Below
             <section>
-                <p>Username: <input
+                <p>Username: <input className='login'
                     type="text"
-                    placeholder="Username"
+                    placeholder="Hello there!"
                     value={username}
                     onChange={user => {setUsername(user.target.value)}}/>
                 </p>
-                <p>Password: <input
+                <p>Password: <input className='login'
                     type="password"
-                    placeholder="Password"
+                    placeholder="*******"
                     value={password}
                     onChange={pass => {setPassword(pass.target.value)}}/>
                 </p>
-                <button onClick={checkUser}>Login</button>
-                <button onClick={makeUser}>Sign Up</button>
+                <button onClick={checkUser} className='button'><span>Login </span></button>
+                <button onClick={makeUser} className='button'><span>Sign Up </span></button>
             </section>
         </div>
     );

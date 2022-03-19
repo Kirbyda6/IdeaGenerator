@@ -42,7 +42,7 @@ app.post('/users', (req, res) => {
 });
 
 app.get('/ideas', (req, res) => {
-    ideas.findIdea({}, '', 0)
+    ideas.findIdea(req.query, '', 1)
     .then(idea => {
         res.status(200).json(idea);
     })
@@ -76,6 +76,18 @@ app.get('/users', (req, res) => {
     });
 });
 
+app.get('/collection', (req, res) => {
+    const username = req.query.username;
+    ideas.findUser({ username })
+    .then(user => {
+        res.status(200).json(user);
+    })
+    .catch(error => {
+        console.error(error);
+        res.status(500).json({ Error: error });
+    });
+});
+
 app.get('/user', (req, res) => {
     const username = req.query.username;
     ideas.findUser({ username })
@@ -88,7 +100,7 @@ app.get('/user', (req, res) => {
     });
 });
 
-app.put('/ideas/:_id', (req, res) => {
+app.put('/ideas/:idea', (req, res) => {
     ideas.updateIdea(req.params, req.body)
     .then(idea => {
         res.status(200).json(idea);
@@ -98,7 +110,7 @@ app.put('/ideas/:_id', (req, res) => {
     })
 });
 
-app.put('/users/:_id', (req, res) => {
+app.put('/users/:username', (req, res) => {
     ideas.updateUser(req.params, req.body)
     .then(user => {
         res.status(200).json(user);
@@ -108,8 +120,7 @@ app.put('/users/:_id', (req, res) => {
     })
 });
 
-app.delete('/ideas/:_id', (req, res) => {
-    console.log(req.params)
+app.delete('/ideas/:idea', (req, res) => {
     ideas.deleteIdeas(req.params)
     .then(idea => {
         res.status(200).json(idea);

@@ -1,11 +1,11 @@
 import { React, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 
-function MakeProject() {
+function MakeProject({ username }) {
 
     const [idea, setIdea] = useState('');
     const votes = 1
-    const [creator, setCreator] = useState('');
+    const creator = username
     const [details, setDetails] = useState('');
 
     const navigate = useNavigate()
@@ -31,35 +31,26 @@ function MakeProject() {
     };
 
     return (
-        <div className="App-header">
-            <span className='main-link'>
+        <div className="main">
+            <span className='corner-links'>
                 <Link to="/Home" className='link'>Front Page</Link><> </>
                 <Link to="/MyCollection" className='link'>My Collection</Link>
             </span>
             <h1>Make A Project</h1>
-            <input
+            <h3>What would you like the name of your idea to be?</h3>
+            <input className='ideaCreation'
                 type="text"
-                placeholder="Enter idea here"
+                placeholder="Idea!"
                 value={idea}
                 onChange={idea => setIdea(idea.target.value)} />
-            <input
+            <h3>Give us some details of your idea</h3>
+            <textarea className='ideaCreation' id='details'
                 type="text"
-                min={1}
-                placeholder="Enter Name here"
-                value={creator}
-                onChange={idea => setCreator(idea.target.value)} />
-            {/* <input
-                type="textbox"
-                placeholder="Enter details here"
-                value={details}
-                onChange={idea => setDetails(idea.target.value)} /> */}
-            <textarea
-                placeholder="Enter details here"
-                rows="5"
-                cols="21"
+                rows={5}
+                placeholder="Details!"
                 value={details}
                 onChange={idea => setDetails(idea.target.value)} />
-            <button onClick={addIdea}>Create</button>
+            <button onClick={addIdea} className='button'><span>Create </span></button>
         </div>
     );
 }

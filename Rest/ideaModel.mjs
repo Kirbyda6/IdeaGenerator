@@ -21,16 +21,10 @@ const userSchema = mongoose.Schema({
  * Compile the model from the schema. This must be done after defining the schema.
  */
 const Idea = ideaConnection.model("Idea", ideaSchema);
-const User = userConnection.model("User", userSchema);
 
 const createIdea = async (idea, votes, creator, details) => {
     const newIdea = new Idea({ idea: idea, votes: votes, creator: creator, details: details });
     return newIdea.save();
-}
-
-const createUser = async (username, password) => {
-    const user = new User({ username: username, password: password, ideaCollection: [] });
-    return user.save();
 }
 
 const findIdea = async (filter, projection, limit) => {
@@ -45,24 +39,31 @@ const findRandIdea = async () => {
     return query.exec();
 }
 
-const findUser = async (filter) => {
-    const query = User.findOne(filter).select("-password")
-    return query.exec();
-}
-
-const updateIdea = async (_id, update) => {
-    const result = await Idea.findOneAndUpdate(_id , update, {useFindAndModify: false});
-    return result;
-}
-
-const updateUser = async (_id, update) => {
-    const result = await User.findOneAndUpdate(_id , update, {useFindAndModify: false});
+const updateIdea = async (idea, update) => {
+    const result = await Idea.findOneAndUpdate(idea , update);
     return result;
 }
 
 const deleteIdeas = async (conditions) => {
     const result = await Idea.deleteMany(conditions);
     return result.deletedCount;
+}
+
+const User = userConnection.model("User", userSchema);
+
+const createUser = async (username, password) => {
+    const user = new User({ username: username, password: password, ideaCollection: [] });
+    return user.save();
+}
+
+const findUser = async (filter) => {
+    const query = User.findOne(filter).select("-password")
+    return query.exec();
+}
+
+const updateUser = async (user, update) => {
+    const result = await User.findOneAndUpdate(user , {$push: {ideaCollection: update}});
+    return result;
 }
 
 const deleteUsers = async (conditions) => {

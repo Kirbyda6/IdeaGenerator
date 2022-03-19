@@ -1,17 +1,12 @@
 import mongoose from "mongoose";
 
 function makeNewConnection(uri) {
-    mongoose.connect(uri, {
+    const db = mongoose.createConnection(uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
-
-    const db = mongoose.connection;
-
-    // The open event is called when the database connection successfully opens
-    db.once("open", () => {
-        console.log("Successfully connected to MongoDB using Mongoose!");
-    });
+    
+    console.log('New Connection')
 
     return db;
 }
